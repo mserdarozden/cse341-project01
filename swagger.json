@@ -5,7 +5,7 @@
     "description": "Users API",
     "version": "1.0.0"
   },
-  "host": "cse341-project01-2f1p.onrender.com",
+  "host": "https://cse341-project01-2f1p.onrender.com",
   "basePath": "/",
   "schemes": [
     "https"
@@ -51,16 +51,19 @@
             "schema": {
               "type": "object",
               "properties": {
+                "firstName": {
+                  "example": "any"
+                },
+                "lastName": {
+                  "example": "any"
+                },
                 "email": {
                   "example": "any"
                 },
-                "username": {
+                "favoriteColor": {
                   "example": "any"
                 },
-                "name": {
-                  "example": "any"
-                },
-                "ipaddress": {
+                "birthday": {
                   "example": "any"
                 }
               }
@@ -118,16 +121,19 @@
             "schema": {
               "type": "object",
               "properties": {
+                "firstName": {
+                  "example": "any"
+                },
+                "lastName": {
+                  "example": "any"
+                },
                 "email": {
                   "example": "any"
                 },
-                "username": {
+                "favoriteColor": {
                   "example": "any"
                 },
-                "name": {
-                  "example": "any"
-                },
-                "ipaddress": {
+                "birthday": {
                   "example": "any"
                 }
               }
