@@ -1,0 +1,21 @@
+// LOCALHOST
+### Get all users
+Send Request
+GET http://localhost:3000/users
+
+### Get contact by id
+Send Request
+GET http://localhost:3000/users/622023f642f9ab4cd6e060b3
+
+### Create contact
+Send Request
+POST http://localhost:3000/users HTTP/1.1
+content-type: application/json
+
+{
+  "firstName": "Ashley",
+  "lastName": "Weaver",
+  "email": "aweaver@test.com",
+  "favoriteColor": "Brown",
+  "birthday": "06/19/2000"
+}
