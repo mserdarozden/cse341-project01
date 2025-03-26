@@ -2,25 +2,38 @@ const mongodb = require('../data/database');
 const ObjectId = require('mongodb').ObjectId;
 
 const getAll = async (req, res) => {
-    console.log('Getting all users');
-    //#swagger.tags = ['Users']
-    const result = await mongodb.getDatabase().db().collection('users').find();
-    console.log("result", result);
-    result.toArray().then((users) => {
+    try {
+        console.log('Getting all users');
+        //#swagger.tags = ['Users']
+        const result = await mongodb.getDatabase().db().collection('users').find();
+        const users = await result.toArray();
         res.setHeader('Content-Type', 'application/json');
         res.status(200).json(users);
-        //console.log("users", users);
-    });
+    } catch (err) {
+        console.error('Error fetching users:', err);
+        res.status(500).json({ message: 'Failed to fetch users', error: err });
+    }
 };
 
 const getSingle = async (req, res) => {
-  //#swagger.tags = ['Users']
-    const userId = new ObjectId(req.params.id);
-    const result = await mongodb.getDatabase().db().collection('users').find({ _id: userId });
-    result.toArray().then((users) => {
-        res.setHeader('Content-Type', 'application/json');
-        res.status(200).json(users[0]);
-    });
+  if (!ObjectId.isValid(req.params.id)) {
+    res.status(400).json('Must use a valid contact id to find a contact.');
+  }
+    try {
+        //#swagger.tags = ['Users']
+        const userId = new ObjectId(req.params.id);
+        const result = await mongodb.getDatabase().db().collection('users').find({ _id: userId });
+        const users = await result.toArray();
+        if (users.length === 0) {
+            res.status(404).json({ message: 'User not found' });
+        } else {
+            res.setHeader('Content-Type', 'application/json');
+            res.status(200).json(users[0]);
+        }
+    } catch (err) {
+        console.error('Error fetching user:', err);
+        res.status(500).json({ message: 'Failed to fetch user', error: err });
+    }
 };
 
 const createUser = async (req, res) => {
@@ -42,6 +55,9 @@ const createUser = async (req, res) => {
   };
   
   const updateUser = async (req, res) => {
+    if (!ObjectId.isValid(req.params.id)) {
+      res.status(400).json('Must use a valid contact id to find a contact.');
+    }
     //#swagger.tags = ['Users']
     const userId = new ObjectId(req.params.id);
     const user = {
